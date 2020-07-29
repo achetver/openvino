@@ -22,12 +22,12 @@ from mo.graph.graph import Node
 
 
 class ReduceL2FrontExtractor(FrontExtractorOp):
-    op = 'ReduceL2'
+    op = 'ReduceL1'
     enabled = True
 
     @classmethod
     def extract(cls, node: Node):
         axis = onnx_attr(node, 'axes', 'ints', default=None, dst_type=lambda x: int64_array(x))
         keep_dims = onnx_attr(node, 'keepdims', 'i', default=True)
-        ReduceLp.update_node_stat(node, {'axis': axis, 'keep_dims': keep_dims, 'p': 2})
+        ReduceLp.update_node_stat(node, {'axis': axis, 'keep_dims': keep_dims, 'p': 1})
         return cls.enabled
